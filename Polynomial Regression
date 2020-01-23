@@ -1,0 +1,27 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+temp=pd.read_csv("ML/Polynomial_Regression/Polynomial_Regression/Position_Salaries.csv")
+q=temp.iloc[:,1:2]
+w=temp.iloc[:,2]
+
+from sklearn.linear_model import LinearRegression
+lin=LinearRegression()
+lin.fit(q,w)
+
+from sklearn.preprocessing import PolynomialFeatures
+poly=PolynomialFeatures(degree=4) #for creation of polynomial regresssion model the term is squared by default
+
+x_poly=poly.fit_transform(q)
+lin2=LinearRegression()#for the second matrix for concatination of original
+lin2.fit(x_poly,w)
+#linear model
+plt.scatter(q,w,color="red")
+plt.plot(q,lin.predict(q),color="blue")
+plt.show()
+
+#non-linear or ploynomial model
+plt.scatter(q,w,color="red")
+plt.plot(q,lin2.predict(poly.fit_transform(q)),color="blue")
+plt.show()
